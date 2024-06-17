@@ -9,29 +9,25 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
+import utilities.SeleniumHelpers;
 
 public class Login {
 
     WebDriver driver;
     WebDriverWait wait;
 
+    //Memanggil Selenium Helpers
+    private SeleniumHelpers selenium = new SeleniumHelpers(driver);
+
     // Mendefinisikan locator untuk tombol "Sign in" di halaman utama Google
     By signInButtonLocator = By.xpath("//a[contains(text(),'Sign in') or @title='Sign in']");
     // Mendefinisikan locator untuk formulir login Google (input email)
     By emailTextField = By.xpath("//input[@type='email' or @name='identifier']");
 
+
     @Given("the user is on the Google homepage")
     public void the_user_is_on_the_google_homepage() {
-        // Mengatur WebDriverManager untuk menangani setup ChromeDriver
-        WebDriverManager.chromedriver().setup();
-        // Membuat instance dari ChromeDriver
-        driver = new ChromeDriver();
-        // Membuat instance dari WebDriverWait dengan waktu tunggu (misalnya, 10 detik)
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        // Membuka halaman Google
-        driver.get("https://www.google.com");
-        // Print judul halaman
-        System.out.println("Title of the page is: " + driver.getTitle());
+        selenium.navigateToPage("https://www.google.com");
     }
 
     @When("the user clicks on the {string} button")
