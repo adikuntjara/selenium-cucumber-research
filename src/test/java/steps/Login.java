@@ -1,54 +1,55 @@
 package steps;
 
-import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
+import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.time.Duration;
-import utilities.SeleniumHelpers;
+import org.testng.Assert;
 
 public class Login {
 
     WebDriver driver;
     WebDriverWait wait;
 
-    //Memanggil Selenium Helpers
-    private SeleniumHelpers selenium = new SeleniumHelpers(driver);
-
-    // Mendefinisikan locator untuk tombol "Sign in" di halaman utama Google
-    By signInButtonLocator = By.xpath("//a[contains(text(),'Sign in') or @title='Sign in']");
-    // Mendefinisikan locator untuk formulir login Google (input email)
-    By emailTextField = By.xpath("//input[@type='email' or @name='identifier']");
-
-
-    @Given("the user is on the Google homepage")
-    public void the_user_is_on_the_google_homepage() {
-        selenium.navigateToPage("https://www.google.com");
+    @Given("the user is on the Sauce Labs Demo website")
+    public void the_user_is_on_the_sauce_labs_demo_website() {
+        // Mengatur WebDriverManager untuk menangani setup ChromeDriver
+        WebDriverManager.chromedriver().setup();
+        // Membuat instance dari ChromeDriver
+        driver = new ChromeDriver();
+        // Membuat instance dari WebDriverWait dengan waktu tunggu (misalnya, 10 detik)
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        // Maximize the browser window
+        driver.manage().window().maximize();
+        // Membuka halaman Google
+        driver.get("https://www.saucedemo.com/");
+        // Print judul halaman
+        System.out.println("Title of the page is: " + driver.getTitle());
     }
 
-    @When("the user clicks on the {string} button")
-    public void the_user_clicks_on_the_button(String buttonText) {
-        // Menunggu hingga tombol "Sign in" dapat diklik
-        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(signInButtonLocator));
-        // Mengklik tombol "Sign in"
-        signInButton.click();
+    @When("the user is login as a standard_user")
+    public void the_user_is_login_as_a_standard_user() {
+        // Mencari field username dan memasukkan username
+        WebElement usernameField = driver.findElement(By.id("user-name"));
+        usernameField.sendKeys("standard_user");
+
+        // Mencari field password dan memasukkan password
+        WebElement passwordField = driver.findElement(By.id("password"));
+        passwordField.sendKeys("secret_sauce");
+
+        // Mencari button login dan click
+        WebElement loginButton = driver.findElement(By.id("login-button"));
+        loginButton.click();
     }
 
-    @Then("the user should be redirected to the Google login form")
-    public void the_user_should_be_redirected_to_the_google_login_form() {
-        // Menunggu hingga formulir login terlihat
-        WebElement loginForm = wait.until(ExpectedConditions.visibilityOfElementLocated(emailTextField));
-        // Memvalidasi bahwa formulir login ditampilkan
-        if (loginForm.isDisplayed()) {
-            System.out.println("Login form is displayed successfully!");
-        } else {
-            System.out.println("Login form is not displayed.");
-        }
-        // Menutup browser
-        driver.quit();
+    @When("the user will successfully login")
+    public void the_user_will_successfully_login() {
+        // Assert that the login was successful by checking if the inventory container is displayed
+        WebElement inventoryContainer = driver.findElement(By.id("inventory_container"));
+        Assert.assertTrue(inventoryContainer.isDisplayed(), "Inventory container should be displayed after login");
     }
 }

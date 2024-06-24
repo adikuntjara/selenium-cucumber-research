@@ -1,6 +1,6 @@
-Feature: Google Login Form Access
+Feature: Login
 
-  Scenario: User can access the Google login form
-    Given the user is on the Google homepage
-    When the user clicks on the "Sign in" button
-    Then the user should be redirected to the Google login form
+  Scenario: User can login Sauce Labs Demo website using standard_user
+    Given the user is on the Sauce Labs Demo website
+    When the user is login as a standard_user
+    Then the user will successfully login
