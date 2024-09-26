@@ -8,6 +8,9 @@
 
 > **Cucumber** is a behavior-driven development (BDD) framework that allows developers and testers to write test cases in a natural language format (Gherkin). It bridges the gap between technical and non-technical team members by enabling the creation of test scenarios that are easy to understand. Cucumber automates functional testing and integrates with various programming languages, such as Java, Ruby, and JavaScript, making it a versatile tool for writing clear, readable, and maintainable automated test scripts.
 
+## Types of Automation Testing:
+1. UI Web
+
 ## Framework Used:
 1. Selenium
 2. Cucumber
@@ -26,4 +29,7 @@
 2. Right click pom.xml -> Maven -> Reload project
 
 ## How to Run the Test:
-1. Right click TestNGRunnerTest on folder Directory
+1. Right click TestNGRunnerTest on folder Directory `selenium-research/src/test/java/runners/TestNGRunnerTest.java`
+
+## Websites Used for Testing:
+1. https://www.saucedemo.com/
